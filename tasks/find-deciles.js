@@ -15,6 +15,7 @@ const decileFile = path.join(outputDir, 'decile_cutoffs.csv');
 
 // Flag to include negative values in decile calculations
 const includeNegatives = false;
+const includeZeros = false;
 
 // List of year and variable pairs (this array gets looped, so adding in more years here will process them too as long as there is corressponding INPUT data and and OUTPUT folder)
 const yearVars = [
@@ -89,7 +90,7 @@ async function runPipeline() {
 }
 
 // Generates decile report for a given variable and saves to csv
-async function generateDecileReport(data, targetVar, filePath, includeNegatives) {
+async function generateDecileReport(data, targetVar, filePath, includeNegatives, includeZeros) {
     // 1. Map to numbers and filter out NaNs (values that don't exist or aren't numbers)
     let values = data
         .map(d => parseFloat(d[targetVar]))
@@ -105,6 +106,15 @@ async function generateDecileReport(data, targetVar, filePath, includeNegatives)
         }
     }
 
+    if (!includeZeros) {
+        const countBefore = values.length;
+        values = values.filter(v => v !== 0);
+        const excluded = countBefore - values.length;
+        if (excluded > 0) {
+            console.log(`Excluded ${excluded} zero values from decile calculations.`);
+        }
+    }
+    
     // 3. Sort for decile calculation
     values.sort((a, b) => a - b);
 
