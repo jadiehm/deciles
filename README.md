@@ -33,7 +33,7 @@ In the console run `npm run deciles`. This script:
 * Pulls in raw interview data from Consumer Expenditure Survey, and calculates deciles for each of the `yearVars` pairs, which contain the target year + the target `Variable Name` from the table above.
 * First, the script loads in all the relevant data from each csv file in the `INPUT/[year]` folder.
 * Then it creates a combined dataset with a row for each interview ID (`NEWID`) that has it's corresponding value for family after-tax income. This dataset gets saved as `combined_dataset_[year].csv` in the `OUPUT/[year]` directory.
-* Next, the script finds the decile thresholds using the combined data. If the `includeNegatives` variable is `false` negative income values are not included. Decile thresholds are also currently rounded to the nearest thousand. This dataset gets saved as `decile_cutoffs_[year]` in the `OUTPUT/[year]` directory.
+* Next, the script finds the decile thresholds using the combined data. If the `includeNegatives` variable is `false` negative income values are not included. If the `includeZeros` variable is `false` income values of zero are not included.Decile thresholds are also currently rounded to the nearest thousand. This dataset gets saved as `decile_cutoffs_[year]` in the `OUTPUT/[year]` directory.
 
 
 
