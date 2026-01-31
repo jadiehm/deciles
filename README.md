@@ -1,5 +1,42 @@
 # Svelte Starter
 
+## Deciles
+Source data comes from raw interviews from the Consumer Expenditure Survey's [PUMB Data Files](https://www.bls.gov/cex/pumd_data.htm#csv), which includes complete data for 1980–2023. Data for 2024 does not yet include the variable we need.
+
+### Steps
+
+#### Download data
+Download a csv of `Interview (zip)` for your selected year from the [PUMB Data Files](https://www.bls.gov/cex/pumd_data.htm#csv).
+
+Also download the [Dictionary for Interview and Diary Sruveys (XLSX)](https://www.bls.gov/cex/pumd_data.htm#csv:~:text=Dictionary%20for%20Interview%20and%20Diary%20Surveys%20(XLSX)). This will serve as your guide to selecting the correct varibles.
+
+#### Check the data dictionary for the variables you need
+We are looking for some variation on "Total amount of family income after taxes in the last 12 months." The exact wording may change from year to yea, but it is important that the phrase includes "after taxes." To find this quickly, filter the `Variable description` column and reference the `First year` and `Last year` columns. Here's a sample of those differences:
+
+| Year | File | Variable Name | Variable description |
+| :--- | :--- | :--- | :--- |
+| 2000 | FMLI | FINCATAX | Total amount of family income after taxes in the last 12 months (Collected data) |
+| 2023 | FMLI | FINATXEM | Total amount of family income after estimated taxes in the last 12 months (Imputed or collected data) |
+
+#### Move the files to the INPUT folder
+Looking through `Interview (zip)` files that you downloaded, find all the files whose names start with the `File` variable from the data dictionary sheet. For both 2000 and 2023 it is `FMLI`. Copy all the `FMLI` csv files in the `INPUT` folder in this project. Make a seperate subfolder for each year.
+
+#### Download dependencies to run script
+In the console run these commands to download dependencies.
+* `npm i fs`
+* `npm i path`
+* `npm i csv-parser`
+* `npm i csv-writer`
+
+#### Run the `find-deciles.js` script
+In the console run `npm run deciles`. This script:
+* Pulls in raw interview data from Consumer Expenditure Survey, and calculates deciles for each of the `yearVars` pairs, which contain the target year + the target `Variable Name` from the table above.
+* First, the script loads in all the relevant data from each csv file in the `INPUT/[year]` folder.
+* Then it creates a combined dataset with a row for each interview ID (`NEWID`) that has it's corresponding value for family after-tax income. This dataset gets saved as `combined_dataset_[year].csv` in the `OUPUT/[year]` directory.
+* Next, the script finds the decile thresholds using the combined data. If the `includeNegatives` variable is `false` negative income values are not included. Decile thresholds are also currently rounded to the nearest thousand. This dataset gets saved as `decile_cutoffs_[year]` in the `OUTPUT/[year]` directory.
+
+
+
 **NOTE**: This uses Svelte 5 and is under active migration (not all features will work). For the less adventurous, use the [previous version](https://github.com/the-pudding/svelte-starter) (with Svelte 4).
 
 This [starter template](https://github.com/the-pudding/svelte-starter) aims to quickly scaffold a [SvelteKit](https://kit.svelte.dev/) project, designed around data-driven, visual stories at [The Pudding](https://pudding.cool).
