@@ -123,7 +123,7 @@ async function generateDecileReport(data, targetVar, filePath, includeNegatives)
         ]
     });
 
-    // Organizes decile data
+    // Organizes decile data by splitting the sorted values into 10 equal groups
     const deciles = [];
     for (let i = 1; i <= 10; i++) {
         const startIdx = Math.floor((i - 1) * (values.length / 10));
