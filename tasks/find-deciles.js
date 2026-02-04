@@ -139,10 +139,21 @@ async function generateDecileReport(data, targetVar, filePath, includeNegatives,
         const startIdx = Math.floor((i - 1) * (values.length / 10));
         const endIdx = Math.min(Math.floor(i * (values.length / 10)) - 1, values.length - 1);
 
+        // Gets the subset of values for this decile
+        const decileValues = values.slice(startIdx, endIdx);
+    
+        // Calculates the mean for this decile
+        const sum = decileValues.reduce((acc, val) => acc + val, 0);
+        const mean = decileValues.length > 0 ? sum / decileValues.length : 0;
+
         deciles.push({
             decile: i,
-            min: Math.round(values[startIdx] / 1000) * 1000,
-            max: Math.round(values[endIdx] / 1000) * 1000
+            rawMin: values[startIdx],
+            rawMax: values[endIdx],
+            roundedMin: Math.round(values[startIdx] / 1000) * 1000,
+            roundedMax: Math.round(values[endIdx] / 1000) * 1000,
+            rawMean: mean,
+            roundedMean: Math.round(mean)
         });
     }
 

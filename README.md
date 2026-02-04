@@ -8,7 +8,7 @@ Source data comes from raw interviews from the Consumer Expenditure Survey's [PU
 #### Download data
 Download a csv of `Interview (zip)` for your selected year from the [PUMB Data Files](https://www.bls.gov/cex/pumd_data.htm#csv).
 
-Also download the [Dictionary for Interview and Diary Sruveys (XLSX)](https://www.bls.gov/cex/pumd_data.htm#csv:~:text=Dictionary%20for%20Interview%20and%20Diary%20Surveys%20(XLSX)). This will serve as your guide to selecting the correct varibles.
+Also download the [Dictionary for Interview and Diary Surveys (XLSX)](https://www.bls.gov/cex/pumd_data.htm#csv:~:text=Dictionary%20for%20Interview%20and%20Diary%20Surveys%20(XLSX)). This will serve as your guide to selecting the correct varibles.
 
 #### Check the data dictionary for the variables you need
 We are looking for some variation on "Total amount of family income after taxes in the last 12 months." The exact wording may change from year to year, but it is important that the phrase includes "after taxes." To find this quickly, filter the `Variable description` column and reference the `First year` and `Last year` columns. Here's a sample of those differences:
